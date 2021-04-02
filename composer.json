@@ -1,0 +1,33 @@
+{
+  "name": "rafansilva/authphp",
+  "description": "Sistema de login completo para implementar na sua aplicação. Código Aberto T1.",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Rafael N. Silva",
+      "email": "rafaelnascimento0505@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Source\\": "source"
+    },
+    "files": [
+      "source/Config/Config.php",
+      "source/Config/Helpers.php"
+    ]
+  },
+  "require": {
+    "ext-json": "*",
+    "coffeecode/router": "1.0.7",
+    "coffeecode/datalayer": "1.1.7",
+    "coffeecode/optimizer": "2.0.1",
+    "phpmailer/phpmailer": "v6.0.1",
+    "league/plates": "v4.0.0-alpha",
+    "league/oauth2-facebook": "2.0.3",
+    "league/oauth2-google": "3.0.3",
+    "matthiasmullie/minify": "1.3.66"
+  }
+}
