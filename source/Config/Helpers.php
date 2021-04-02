@@ -23,6 +23,15 @@ function assets(string $path): string
 }
 
 /**
+ * @param string $imageUrl
+ * @return string
+ */
+function routerImage(string $imageUrl): string
+{
+    return "https://via.placeholder.com/1200x628.png?text={$imageUrl}";
+}
+
+/**
  * @param string|null $type
  * @param string|null $message
  * @return string|null

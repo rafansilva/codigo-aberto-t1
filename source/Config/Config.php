@@ -40,8 +40,11 @@ define("DATA_LAYER_CONFIG", [
  * SOCIAL
  */
 define("SOCIAL", [
+    "facebook_page" => "",
     "facebook_author" => "profile.php?id=100053931160706",
-    "facebook_appid" => ""
+    "facebook_appId" => "",
+    "twitter_creator" => "",
+    "twitter_site" => ""
 ]);
 
 /**

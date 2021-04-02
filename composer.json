@@ -16,7 +16,8 @@
     },
     "files": [
       "source/Config/Config.php",
-      "source/Config/Helpers.php"
+      "source/Config/Helpers.php",
+      "source/Config/Minify.php"
     ]
   },
   "require": {
