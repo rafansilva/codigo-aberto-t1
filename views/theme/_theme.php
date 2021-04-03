@@ -8,12 +8,8 @@
 
     <?= $head; ?>
 
-    <link rel="stylesheet" href="<?= assets("css/style.css"); ?>"/>
-    <link rel="stylesheet" href="<?= assets("css/form.css"); ?>"/>
-    <link rel="stylesheet" href="<?= assets("css/button.css"); ?>"/>
-    <link rel="stylesheet" href="<?= assets("css/message.css"); ?>"/>
-    <link rel="stylesheet" href="<?= assets("css/load.css"); ?>"/>
-    <link rel="icon" type="image/png" href="<?= assets("/images/favicon.png"); ?>"/>
+    <link rel="stylesheet" href="<?= asset("style.min.css"); ?>"/>
+    <link rel="icon" type="image/png" href="<?= asset("/images/favicon.png"); ?>"/>
 </head>
 <body>
 
@@ -28,8 +24,7 @@
     <?= $v->section("content"); ?>
 </main>
 
-<script src="<?= assets("js/jquery.js"); ?>"></script>
-<script src="<?= assets("js/jquery-ui.js"); ?>"></script>
+<script src="<?= asset("scripts.min.js"); ?>"></script>
 <?= $v->section("scripts"); ?>
 
 </body>
