@@ -1,26 +1,35 @@
 <?php
 
-use MatthiasMullie\Minify\CSS;
-use MatthiasMullie\Minify\JS;
+if ($_SERVER["HTTP_HOST"] == "localhost") {
 
-/**
- * CSS
- */
+    /**
+     * CSS MINIFY
+     */
+    $minCSS = new \MatthiasMullie\Minify\CSS();
+    $cssDir = scandir(dirname(__DIR__, 2) . "/views/assets/css");
+    foreach ($cssDir as $css) {
+        $cssFile = dirname(__DIR__, 2) . "/views/assets/css/{$css}";
+        if (is_file($cssFile) && pathinfo($cssFile)["extension"] == "css") {
+            $minCSS->add($cssFile);
+        }
+    }
 
-$minCSS = new CSS();
-$minCSS->add(dirname(__DIR__, 2)."/views/assets/css/style.css");
-$minCSS->add(dirname(__DIR__, 2)."/views/assets/css/form.css");
-$minCSS->add(dirname(__DIR__, 2)."/views/assets/css/button.css");
-$minCSS->add(dirname(__DIR__, 2)."/views/assets/css/message.css");
-$minCSS->add(dirname(__DIR__, 2)."/views/assets/css/load.css");
+    $minCSS->minify(dirname(__DIR__, 2) . "/views/assets/style.min.css");
 
-$minCSS->minify(dirname(__DIR__, 2)."/views/assets/style.min.css");
+    /**
+     * JS MINIFY
+     */
+    $minJS = new \MatthiasMullie\Minify\JS();
+    $minJS->add(dirname(__DIR__,2)."/views/assets/js/jquery.js");
+    $minJS->add(dirname(__DIR__,2)."/views/assets/js/jquery-ui.js");
 
-/**
- * JS
- */
+    $jsDir = scandir(dirname(__DIR__, 2) . "/views/assets/js");
+    foreach ($jsDir as $js) {
+        $jsFile = dirname(__DIR__, 2) . "/views/assets/js/{$js}";
+        if (is_file($jsFile) && pathinfo($jsFile)["extension"] == "js") {
+            $minJS->add($jsFile);
+        }
+    }
 
-$minJS = new JS();
-$minJS->add(dirname(__DIR__,2)."/views/assets/js/jquery.js");
-$minJS->add(dirname(__DIR__,2)."/views/assets/js/jquery-ui.js");
-$minJS->minify(dirname(__DIR__,2)."/views/assets/scripts.min.js");
+    $minJS->minify(dirname(__DIR__, 2) . "/views/assets/scripts.min.js");
+}
