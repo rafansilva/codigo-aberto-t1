@@ -7,24 +7,13 @@ namespace Source\Controllers;
 use Source\Core\Controller;
 use Source\Models\User;
 
-/**
- * Class Auth
- * @package Source\Controllers
- */
 class Auth extends Controller
 {
-    /**
-     * Auth constructor.
-     * @param $router
-     */
     public function __construct($router)
     {
         parent::__construct($router);
     }
 
-    /**
-     * @param array $data
-     */
     public function register(array $data): void
     {
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
@@ -37,12 +26,10 @@ class Auth extends Controller
         }
 
         $user = new User();
-        $user->bootstrap(
-            $data["first_name"],
-            $data["last_name"],
-            $data["email"],
-            $data["passwd"]
-        );
+        $user->first_name = $data["first_name"];
+        $user->last_name = $data["last_name"];
+        $user->email = $data["email"];
+        $user->passwd = $data["passwd"];
 
         if (!$user->save()) {
             echo $this->ajaxResponse("message", [
@@ -53,10 +40,8 @@ class Auth extends Controller
         }
 
         $_SESSION["user"] = $user->id;
-
         echo $this->ajaxResponse("redirect", [
             "url" => $this->router->route("app.home")
         ]);
-        return;
     }
 }

@@ -22,32 +22,11 @@ class User extends DataLayer
     }
 
     /**
-     * @param string $firstName
-     * @param string $lastName
-     * @param string $email
-     * @param string $passwd
-     * @return $this
-     */
-    public function bootstrap(
-        string $firstName,
-        string $lastName,
-        string $email,
-        string $passwd
-    ): User
-    {
-        $this->first_name = $firstName;
-        $this->last_name = $lastName;
-        $this->email = $email;
-        $this->passwd = $passwd;
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function save(): bool
     {
-        if (!$this->validadeEmail() || !$this->validadePasswd() || !parent::save()) {
+        if (!$this->validateEmail() || !$this->validatePasswd() || !parent::save()) {
             return false;
         }
 
@@ -57,7 +36,7 @@ class User extends DataLayer
     /**
      * @return bool
      */
-    protected function validadeEmail(): bool
+    protected function validateEmail(): bool
     {
         if (empty($this->email) || !filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $this->fail = new Exception("Por favor informe um e-mail válido para continuar!");
@@ -79,14 +58,14 @@ class User extends DataLayer
                 return false;
             }
         }
-
+        
         return true;
     }
 
     /**
      * @return bool
      */
-    protected function validadePasswd(): bool
+    protected function validatePasswd(): bool
     {
         if (empty($this->passwd) || !is_passwd($this->passwd)) {
             $min = PASSWD["min"];
@@ -95,8 +74,7 @@ class User extends DataLayer
             return false;
         } else {
             $this->passwd = passwd($this->passwd);
+            return true;
         }
-
-        return true;
     }
 }
