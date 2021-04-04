@@ -5,15 +5,26 @@ namespace Source\Controllers;
 
 
 use Source\Core\Controller;
-use Source\Models\Users;
+use Source\Models\User;
 
+/**
+ * Class Auth
+ * @package Source\Controllers
+ */
 class Auth extends Controller
 {
+    /**
+     * Auth constructor.
+     * @param $router
+     */
     public function __construct($router)
     {
         parent::__construct($router);
     }
 
+    /**
+     * @param array $data
+     */
     public function register(array $data): void
     {
         $data = filter_var_array($data, FILTER_SANITIZE_STRIPPED);
@@ -25,31 +36,22 @@ class Auth extends Controller
             return;
         }
 
-        if (!filter_var($data["email"], FILTER_VALIDATE_EMAIL)){
+        $user = new User();
+        $user->bootstrap(
+            $data["first_name"],
+            $data["last_name"],
+            $data["email"],
+            $data["passwd"]
+        );
+
+        if (!$user->save()) {
             echo $this->ajaxResponse("message", [
                 "type" => "error",
-                "message" => "Por favor informe um e-mail válido para continuar!"
+                "message" => $user->fail()->getMessage()
             ]);
             return;
         }
 
-        $checkUserEmail = (new Users())->find("email = :e", "e={$data['email']}")->count();
-        if ($checkUserEmail){
-            echo $this->ajaxResponse("message", [
-                "type" => "error",
-                "message" => "Já existe um usuário cadastrado com esse e-mail!"
-            ]);
-            return;
-        }
-
-
-        $user = new Users();
-        $user->first_name = $data["first_name"];
-        $user->last_name = $data["last_name"];
-        $user->email = $data["email"];
-        $user->passwd = password_hash($data["passwd"], PASSWORD_DEFAULT);
-
-        $user->save();
         $_SESSION["user"] = $user->id;
 
         echo $this->ajaxResponse("redirect", [

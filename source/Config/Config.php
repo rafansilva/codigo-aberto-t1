@@ -37,6 +37,15 @@ define("DATA_LAYER_CONFIG", [
 ]);
 
 /**
+ * PASSWORD
+ */
+define("PASSWD", [
+    "algo" => PASSWORD_DEFAULT,
+    "min" => 8,
+    "max" => 40
+]);
+
+/**
  * SOCIAL
  */
 define("SOCIAL", [

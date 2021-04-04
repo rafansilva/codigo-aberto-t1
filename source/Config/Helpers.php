@@ -13,6 +13,32 @@ function site(string $param = null): string
     return SITE["root"];
 }
 
+/**
+ * @param string $password
+ * @return string
+ */
+function passwd(string $password): string
+{
+    if (!empty(password_get_info($password,)["algo"])) {
+        return $password;
+    }
+
+    return password_hash($password, PASSWD["algo"]);
+}
+
+/**
+ * @param string $password
+ * @return string
+ */
+function is_passwd(string $password): string
+{
+    if (password_get_info($password)['algo'] || (mb_strlen($password) >= PASSWD["min"] && mb_strlen($password) <= PASSWD["max"])) {
+        return true;
+    }
+
+    return false;
+}
+
 
 /**
  * @param string $path
