@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6ab8f668751a68493c735550e1e52d1a",
+    "content-hash": "882afd1d1f0f725bfb1960060a2fd69d",
     "packages": [
         {
             "name": "coffeecode/datalayer",
@@ -834,33 +834,34 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.0.1",
+            "version": "v6.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "992392437c2e2784e0dc41446024fe411d293c96"
+                "reference": "050d430203105c27c30efd1dce7aa421ad882d01"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/992392437c2e2784e0dc41446024fe411d293c96",
-                "reference": "992392437c2e2784e0dc41446024fe411d293c96",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/050d430203105c27c30efd1dce7aa421ad882d01",
+                "reference": "050d430203105c27c30efd1dce7aa421ad882d01",
                 "shasum": ""
             },
             "require": {
                 "ext-ctype": "*",
+                "ext-filter": "*",
+                "ext-hash": "*",
                 "php": ">=5.5.0"
             },
             "require-dev": {
-                "doctrine/annotations": "1.2.*",
-                "friendsofphp/php-cs-fixer": "^2.2",
-                "phpdocumentor/phpdocumentor": "2.*",
-                "phpunit/phpunit": "^4.8 || ^5.7",
-                "zendframework/zend-eventmanager": "3.0.*",
-                "zendframework/zend-i18n": "2.7.3",
-                "zendframework/zend-serializer": "2.7.*"
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "doctrine/annotations": "^1.2",
+                "phpcompatibility/php-compatibility": "^9.3.5",
+                "roave/security-advisories": "dev-latest",
+                "squizlabs/php_codesniffer": "^3.5.6",
+                "yoast/phpunit-polyfills": "^0.2.0"
             },
             "suggest": {
-                "ext-mbstring": "Needed to send email in multibyte encoding charset",
+                "ext-mbstring": "Needed to send email in multibyte encoding charset or decode encoded addresses",
                 "hayageek/oauth2-yahoo": "Needed for Yahoo XOAUTH2 authentication",
                 "league/oauth2-google": "Needed for Google XOAUTH2 authentication",
                 "psr/log": "For optional PSR-3 debug logging",
@@ -875,16 +876,16 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-2.1"
+                "LGPL-2.1-only"
             ],
             "authors": [
                 {
-                    "name": "Jim Jagielski",
-                    "email": "jimjag@gmail.com"
-                },
-                {
                     "name": "Marcus Bointon",
                     "email": "phpmailer@synchromedia.co.uk"
+                },
+                {
+                    "name": "Jim Jagielski",
+                    "email": "jimjag@gmail.com"
                 },
                 {
                     "name": "Andy Prevost",
@@ -897,9 +898,15 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/master"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.4.0"
             },
-            "time": "2017-09-14T16:47:12+00:00"
+            "funding": [
+                {
+                    "url": "https://github.com/Synchro",
+                    "type": "github"
+                }
+            ],
+            "time": "2021-03-31T20:06:42+00:00"
         },
         {
             "name": "psr/http-client",
@@ -1005,6 +1012,59 @@
                 "source": "https://github.com/php-fig/http-message/tree/master"
             },
             "time": "2016-08-06T14:39:51+00:00"
+        },
+        {
+            "name": "rafansilva/emailsender",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rafansilva/emailsender.git",
+                "reference": "3e2603f72fc8bb43f934ddb35e6c5211e2cea249"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rafansilva/emailsender/zipball/3e2603f72fc8bb43f934ddb35e6c5211e2cea249",
+                "reference": "3e2603f72fc8bb43f934ddb35e6c5211e2cea249",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": "^7.1",
+                "phpmailer/phpmailer": "v6.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RafaNSilva\\Support\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rafael N. Silva",
+                    "email": "rafaelnascimento0505@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Uma biblioteca simples para enviar e-mails que abstrai o comportamento da PHPMAILER",
+            "keywords": [
+                "Rafael N. Silva",
+                "Sender",
+                "e-mail",
+                "email",
+                "email sender",
+                "notification",
+                "phpmailer"
+            ],
+            "support": {
+                "issues": "https://github.com/rafansilva/emailsender/issues",
+                "source": "https://github.com/rafansilva/emailsender/tree/1.0.1"
+            },
+            "time": "2021-04-06T02:11:13+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

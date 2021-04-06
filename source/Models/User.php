@@ -22,6 +22,27 @@ class User extends DataLayer
     }
 
     /**
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $passwd
+     * @return $this
+     */
+    public function bootstrap(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $passwd
+    ): User
+    {
+        $this->first_name = $firstName;
+        $this->last_name = $lastName;
+        $this->email = $email;
+        $this->passwd = $passwd;
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function save(): bool
@@ -58,7 +79,7 @@ class User extends DataLayer
                 return false;
             }
         }
-        
+
         return true;
     }
 

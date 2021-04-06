@@ -25,7 +25,7 @@
     "coffeecode/router": "1.0.7",
     "coffeecode/datalayer": "1.1.7",
     "coffeecode/optimizer": "2.0.1",
-    "phpmailer/phpmailer": "v6.0.1",
+    "rafansilva/emailsender":  "1.0.*",
     "league/plates": "v4.0.0-alpha",
     "league/oauth2-facebook": "2.0.3",
     "league/oauth2-google": "3.0.3",

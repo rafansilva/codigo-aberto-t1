@@ -23,13 +23,5 @@ if ($_SERVER["HTTP_HOST"] == "localhost") {
     $minJS->add(dirname(__DIR__,2)."/views/assets/js/jquery.js");
     $minJS->add(dirname(__DIR__,2)."/views/assets/js/jquery-ui.js");
 
-    $jsDir = scandir(dirname(__DIR__, 2) . "/views/assets/js");
-    foreach ($jsDir as $js) {
-        $jsFile = dirname(__DIR__, 2) . "/views/assets/js/{$js}";
-        if (is_file($jsFile) && pathinfo($jsFile)["extension"] == "js") {
-            $minJS->add($jsFile);
-        }
-    }
-
     $minJS->minify(dirname(__DIR__, 2) . "/views/assets/scripts.min.js");
 }
