@@ -59,17 +59,17 @@ define("SOCIAL", [
 /**
  * MAIL CONNECT
  */
-define("CONF_MAIL_HOST", "smtp.sendgrid.net");
-define("CONF_MAIL_PORT", "587");
-define("CONF_MAIL_USER", "apikey");
-define("CONF_MAIL_PASS", "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");
-define("CONF_MAIL_SENDER", ["name" => "Rafael N. Silva", "address" => "rafaelnascimento0505@gmail.com"]);
-define("CONF_MAIL_OPTION_DEBUG", 0);
-define("CONF_MAIL_OPTION_LANG", "br");
-define("CONF_MAIL_OPTION_HTML", true);
-define("CONF_MAIL_OPTION_AUTH", true);
-define("CONF_MAIL_OPTION_SECURE", "tls");
-define("CONF_MAIL_OPTION_CHARSET", "utf-8");
+define("CONF_MAIL_HOST", "smtp.example.com"); //Set the SMTP server to send through
+define("CONF_MAIL_PORT", 587); //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS`
+define("CONF_MAIL_USER", "user@example.com"); //SMTP username
+define("CONF_MAIL_PASS", "password"); //SMTP password
+define("CONF_MAIL_SENDER", ["name" => "yourName", "address" => "your@email.com"]); //Change here the name and email of who will send the email
+define("CONF_MAIL_OPTION_DEBUG", 0); //To enable verbose debug output use 2 or 0 to disable
+define("CONF_MAIL_OPTION_LANG", "br"); //Your language
+define("CONF_MAIL_OPTION_HTML", true); //Set email format to HTML
+define("CONF_MAIL_OPTION_AUTH", true); //Enable SMTP authentication
+define("CONF_MAIL_OPTION_SECURE", "tls"); //Enable TLS encryption
+define("CONF_MAIL_OPTION_CHARSET", "utf-8"); //Default charset is utf-8
 
 /**
  * SOCIAL LOGIN: FACEBOOK

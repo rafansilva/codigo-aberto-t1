@@ -7,11 +7,19 @@ namespace Source\Controllers;
 use Source\Core\Controller;
 use Source\Models\User;
 
+/**
+ * Class App
+ * @package Source\Controllers
+ */
 class App extends Controller
 {
     /** @var User */
     protected $user;
 
+    /**
+     * App constructor.
+     * @param $router
+     */
     public function __construct($router)
     {
         parent::__construct($router);
@@ -26,23 +34,27 @@ class App extends Controller
 
     }
 
+    /**
+     *
+     */
     public function home(): void
     {
-//        $head = $this->seo->optimize(
-//            "Dashboard Home | " . site("name"),
-//            site("desc"),
-//            $this->router->route("web.home"),
-//            routerImage("HOME")
-//        )->render();
-//
-//        echo $this->view->render("theme/dashboard", [
-//            "head" => $head,
-//            "user" => ""
-//        ]);
+        $head = $this->seo->optimize(
+            "Bem-vindo(a) {$this->user->first_name} | " . site("name"),
+            site("desc"),
+            $this->router->route("app.home"),
+            routerImage("CONTA DE {$this->user->first_name}")
+        )->render();
 
-        var_dump($this->user);
+        echo $this->view->render("theme/dashboard", [
+            "head" => $head,
+            "user" => $this->user
+        ]);
     }
 
+    /**
+     *
+     */
     public function logoff(): void
     {
         unset($_SESSION["user"]);
