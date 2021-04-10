@@ -22,6 +22,7 @@
   },
   "require": {
     "ext-json": "*",
+    "ext-pdo": "*",
     "coffeecode/router": "1.0.7",
     "coffeecode/datalayer": "1.1.7",
     "coffeecode/optimizer": "2.0.1",
@@ -30,5 +31,6 @@
     "league/oauth2-facebook": "2.0.3",
     "league/oauth2-google": "3.0.3",
     "matthiasmullie/minify": "1.3.66"
+
   }
 }

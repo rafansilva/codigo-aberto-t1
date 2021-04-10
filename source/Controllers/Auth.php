@@ -4,6 +4,10 @@
 namespace Source\Controllers;
 
 
+use League\OAuth2\Client\Provider\Facebook;
+use League\OAuth2\Client\Provider\FacebookUser;
+use League\OAuth2\Client\Provider\Google;
+use League\OAuth2\Client\Provider\GoogleUser;
 use RafaNSilva\Support\Email;
 use Source\Core\Controller;
 use Source\Models\User;
@@ -48,6 +52,9 @@ class Auth extends Controller
             return;
         }
 
+        /** SOCIAL VALIDATE */
+        $this->socialValidate($user);
+
         $_SESSION["user"] = $user->id;
         echo $this->ajaxResponse("redirect", [
             "url" => $this->router->route("app.home")
@@ -75,6 +82,9 @@ class Auth extends Controller
             $data["email"],
             $data["passwd"]
         );
+
+        /** SOCIAL VALIDATE */
+        $this->socialValidate($user);
 
         if (!$user->save()) {
             echo $this->ajaxResponse("message", [
@@ -187,5 +197,147 @@ class Auth extends Controller
         echo $this->ajaxResponse("redirect", [
             "url" => $this->router->route("web.login")
         ]);
+    }
+
+    public function facebook(): void
+    {
+        $facebook = new Facebook(FACEBOOK_LOGIN);
+        $error = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRIPPED);
+        $code = filter_input(INPUT_GET, "code", FILTER_SANITIZE_STRIPPED);
+
+        if (!$error && !$code) {
+            $auth_url = $facebook->getAuthorizationUrl(["scope" => "email"]);
+            header("Location: {$auth_url}");
+            return;
+        }
+
+        if ($error) {
+            flash("error", "Não foi possível logar com o Facebook");
+            $this->router->route("web.login");
+        }
+
+        if ($code && empty($_SESSION["facebook_auth"])) {
+            try {
+                $token = $facebook->getAccessToken("authorization_code", ["code" => $code]);
+                $_SESSION["facebook_auth"] = serialize($facebook->getResourceOwner($token));
+            } catch (\Exception $exception) {
+                flash("error", "Não foi possível logar com o Facebook");
+                $this->router->route("web.login");
+            }
+        }
+
+        /** @var $facebookUser FacebookUser */
+        $facebookUser = unserialize($_SESSION["facebook_auth"]);
+        $userById = (new User())->find("facebook_id = :id", "id={$facebookUser->getId()}")->fetch();
+
+        //LOGIN BY ID
+        if ($userById) {
+            unset($_SESSION["facebook_auth"]);
+
+            $_SESSION["user"] = $userById->id;
+            $this->router->redirect("app.home");
+        }
+
+        //LOGIN BY E-MAIL
+        $userByEmail = (new User())->find("email = :e", "e={$facebookUser->getEmail()}")->fetch();
+        if ($userByEmail) {
+            flash("info", "Olá {$facebookUser->getFirstName()}, faça login para conectar seu Facebook");
+            $this->router->redirect("web.login");
+        }
+
+        //REGISTER IF NOT
+        $link = $this->router->route("web.login");
+        flash(
+            "info",
+            "Olá {$facebookUser->getFirstName()}, <b>se já tem uma conta clique <a title='Fazer Login' href='{$link}'>FAZER LOGIN</a></b>, ou complete seu cadastro"
+        );
+        $this->router->redirect("web.register");
+    }
+
+    public function google(): void
+    {
+        $google = new Google(GOOGLE_LOGIN);
+        $error = filter_input(INPUT_GET, "error", FILTER_SANITIZE_STRIPPED);
+        $code = filter_input(INPUT_GET, "code", FILTER_SANITIZE_STRIPPED);
+
+        if (!$error && !$code) {
+            $auth_url = $google->getAuthorizationUrl();
+            header("Location: {$auth_url}");
+            return;
+        }
+
+        if ($error) {
+            flash("error", "Não foi possível logar com o Google");
+            $this->router->route("web.login");
+        }
+
+        if ($code && empty($_SESSION["google_auth"])) {
+            try {
+                $token = $google->getAccessToken("authorization_code", ["code" => $code]);
+                $_SESSION["google_auth"] = serialize($google->getResourceOwner($token));
+            } catch (\Exception $exception) {
+                flash("error", "Não foi possível logar com o Google");
+                $this->router->route("web.login");
+            }
+        }
+
+        /** @var $googleUser FacebookUser */
+        $googleUser = unserialize($_SESSION["google_auth"]);
+        $userById = (new User())->find("google_id = :id", "id={$googleUser->getId()}")->fetch();
+
+        //LOGIN BY ID
+        if ($userById) {
+            unset($_SESSION["google_auth"]);
+
+            $_SESSION["user"] = $userById->id;
+            $this->router->redirect("app.home");
+        }
+
+        //LOGIN BY E-MAIL
+        $userByEmail = (new User())->find("email = :e", "e={$googleUser->getEmail()}")->fetch();
+        if ($userByEmail) {
+            flash("info", "Olá {$googleUser->getFirstName()}, faça login para conectar seu Facebook");
+            $this->router->redirect("web.login");
+        }
+
+        //REGISTER IF NOT
+        $link = $this->router->route("web.login");
+        flash(
+            "info",
+            "Olá {$googleUser->getFirstName()}, <b>se já tem uma conta clique <a title='Fazer Login' href='{$link}'>FAZER LOGIN</a></b>, ou complete seu cadastro"
+        );
+        $this->router->redirect("web.register");
+    }
+
+    public function socialValidate(User $user): void
+    {
+        /**
+         * FACEBOOK
+         */
+        if (!empty($_SESSION["facebook_auth"])) {
+            /** @var $facebookUser FacebookUser */
+            $facebookUser = unserialize($_SESSION["facebook_auth"]);
+
+            $user->facebook_id = $facebookUser->getId();
+            $user->photo = $facebookUser->getPictureUrl();
+            $user->save();
+
+            unset($_SESSION["facebook_auth"]);
+        }
+
+        /**
+         * GOOGLE
+         */
+
+        if (!empty($_SESSION["google_auth"])) {
+            /** @var $googleUser GoogleUser */
+            $googleUser = unserialize($_SESSION["google_auth"]);
+
+            $user->google_id = $googleUser->getId();
+            $user->photo = $googleUser->getAvatar();
+            $user->save();
+
+            unset($_SESSION["google_auth"]);
+        }
     }
 }

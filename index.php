@@ -30,7 +30,9 @@ $router->post("/reset", "Auth:reset", "auth.reset");
 /**
  * AUTH SOCIAL
  */
-
+$router->group(null);
+$router->get("/facebook", "Auth:facebook", "auth.facebook");
+$router->get("/google", "Auth:google", "auth.google");
 
 /**
  * PROFILE
@@ -56,7 +58,7 @@ $router->dispatch();
 /**
  * ERRORS PROCESS
  */
-if ($router->error()){
+if ($router->error()) {
     $router->redirect("web.error", ["errcode" => $router->error()]);
 }
 

@@ -74,11 +74,20 @@ define("CONF_MAIL_OPTION_CHARSET", "utf-8"); //Default charset is utf-8
 /**
  * SOCIAL LOGIN: FACEBOOK
  */
-define("FACEBOOK_LOGIN", []);
+define("FACEBOOK_LOGIN", [
+    'clientId' => '',
+    'clientSecret' => '',
+    'redirectUri' => '',
+    'graphApiVersion' => '',
+]);
 
 /**
  * SOCIAL LOGIN: GOOGLE
  */
-define("GOOGLE_LOGIN", []);
+define("GOOGLE_LOGIN", [
+    'clientId' => '',
+    'clientSecret' => '',
+    'redirectUri' => ''
+]);
 
 
